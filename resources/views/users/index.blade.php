@@ -47,6 +47,7 @@
                         <td>{{ $user->email }}</td>
                         <td>
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a href="{{ route('users.facturation', $user->id) }}" class="btn btn-info btn-sm">Facturation</a>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')

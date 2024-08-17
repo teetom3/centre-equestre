@@ -90,24 +90,20 @@ class ChevalController extends Controller
 
         // Filtrage des prestations de type "soins"
         $soins = LivrePrestation::where('cheval_id', $cheval->id)
-            ->whereHas('prestation', function($query) {
-                $query->where('type', 'soins');
-            })
-            ->when($request->input('date_debut'), function ($query, $dateDebut) {
-                return $query->where('date_prestation', '>=', $dateDebut);
-            })
-            ->when($request->input('date_fin'), function ($query, $dateFin) {
-                return $query->where('date_prestation', '<=', $dateFin);
-            })
-            ->when($request->input('nom_prestation'), function ($query, $nomPrestation) {
-                return $query->whereHas('prestation', function($query) use ($nomPrestation) {
-                    $query->where('nom', 'like', '%' . $nomPrestation . '%');
-                });
-            })
-            ->with('prestation')
-            ->orderBy('date_prestation', 'desc')
-            ->get();
-
+    ->whereHas('prestation', function ($query) {
+        $query->where('type', 'Soin'); // ou 'Soins', selon ce qui correspond
+    })
+    ->when(request('date_debut'), function ($query) {
+        $query->where('date_prestation', '>=', request('date_debut'));
+    })
+    ->when(request('date_fin'), function ($query) {
+        $query->where('date_prestation', '<=', request('date_fin'));
+    })
+    ->with('prestation')
+    ->orderBy('date_prestation', 'desc')
+    ->get();
+       
+            
         return view('chevaux.show', compact('cheval', 'prestations', 'jours', 'historique', 'livreDesPrestations', 'soins'));
     }
 

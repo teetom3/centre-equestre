@@ -7,6 +7,9 @@ use App\Models\Evenement;
 use App\Models\User;
 use App\Models\Cheval;
 use Illuminate\Http\Request;
+use App\Models\LivrePrestation;
+
+
 
 class InscriptionController extends Controller
 {
@@ -25,6 +28,36 @@ class InscriptionController extends Controller
         $chevaux = Cheval::all();
         return view('inscriptions.create', compact('evenements', 'users', 'chevaux'));
     }
+
+     // Inscrire un utilisateur à un événement depuis la vue de l'événement
+     public function inscrire(Request $request, Evenement $evenement)
+     {
+         $request->validate([
+             'user_id' => 'required|exists:users,id',
+             'cheval_id' => 'nullable|exists:chevals,id',
+             'prestation_id' => 'nullable|exists:prestations,id',
+         ]);
+ 
+         // Créer une nouvelle inscription
+         $inscription = new Inscription([
+             'evenement_id' => $evenement->id,
+             'user_id' => $request->user_id,
+             'cheval_id' => $request->cheval_id,
+             'date_inscription' => now(),
+         ]);
+         $inscription->save();
+ 
+         // Si une prestation est sélectionnée, l'ajouter au livre des prestations
+         if ($request->prestation_id) {
+             LivrePrestation::create([
+                 'cheval_id' => $request->cheval_id,
+                 'prestation_id' => $request->prestation_id,
+                 'date_prestation' => now(),
+             ]);
+         }
+ 
+         return redirect()->route('evenements.show', $evenement->id)->with('success', 'Utilisateur inscrit avec succès');
+     }
 
     // Stocker une nouvelle inscription dans la base de données
     public function store(Request $request)
@@ -81,7 +114,9 @@ class InscriptionController extends Controller
     // Supprimer une inscription de la base de données
     public function destroy(Inscription $inscription)
     {
+        $evenementId = $inscription->evenement_id;
         $inscription->delete();
-        return redirect()->route('inscriptions.index')->with('success', 'Inscription supprimée avec succès');
+        
+        return redirect()->route('evenements.show', $evenementId)->with('success', 'Inscription supprimée avec succès');
     }
 }

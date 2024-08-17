@@ -33,6 +33,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('prestations.index') }}">Gérer les Prestations</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('evenements.index') }}">Gérer les evènements</a>
+                            </li>
                         @endif
                     @endauth
                 </ul>

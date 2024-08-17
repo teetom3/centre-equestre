@@ -25,7 +25,7 @@ class PrestationController extends Controller
     {
         $request->validate([
             'nom' => 'required|string|max:255',
-            'type' => 'required|string|in:Service,Produit',
+            'type' => 'required|string|in:Service,Produit,Soin',
             'prix' => 'required|numeric',
             'tva' => 'required|numeric',
         ]);

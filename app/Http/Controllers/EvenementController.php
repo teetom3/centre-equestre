@@ -4,9 +4,49 @@ namespace App\Http\Controllers;
 
 use App\Models\Evenement;
 use Illuminate\Http\Request;
+use App\Models\Inscription;
+use App\Models\LivrePrestation;
+
+use Illuminate\Support\Facades\Auth;
 
 class EvenementController extends Controller
 {
+
+
+    public function landingPage()
+{
+    $evenements = Evenement::all();
+    return view('evenements.landing', compact('evenements'));
+}
+
+public function inscrire(Request $request, Evenement $evenement)
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'cheval_id' => 'nullable|exists:chevals,id',
+        'prestation_id' => 'nullable|exists:prestations,id',
+    ]);
+
+    // Créer une nouvelle inscription
+    $inscription = new Inscription([
+        'evenement_id' => $evenement->id,
+        'user_id' => $request->user_id,
+        'cheval_id' => $request->cheval_id,
+        'date_inscription' => now(),
+    ]);
+    $inscription->save();
+
+    // Si une prestation est sélectionnée, l'ajouter au livre des prestations
+    if ($request->prestation_id) {
+        LivrePrestation::create([
+            'cheval_id' => $request->cheval_id,
+            'prestation_id' => $request->prestation_id,
+            'date_prestation' => now(),
+        ]);
+    }
+
+    return redirect()->route('evenements.show', $evenement->id)->with('success', 'Utilisateur inscrit avec succès');
+}
     // Afficher la liste des événements
     public function index()
     {
@@ -49,7 +89,13 @@ class EvenementController extends Controller
     // Afficher les détails d'un événement
     public function show(Evenement $evenement)
     {
-        return view('evenements.show', compact('evenement'));
+        $users = \App\Models\User::all();
+    $chevaux = \App\Models\Cheval::all();
+    $prestations = \App\Models\Prestation::all();
+    $inscriptions = \App\Models\Inscription::with(['user', 'cheval'])->where('evenement_id', $evenement->id)->get();
+
+    return view('evenements.show', compact('evenement', 'users', 'chevaux', 'prestations','inscriptions'));
+        
     }
 
     // Afficher le formulaire pour modifier un événement

@@ -174,6 +174,14 @@
             }
         }
 
+        function toggleSoinTable() {
+            const soinTableContainer = document.getElementById('soinTableContainer');
+            if (soinTableContainer.style.display === 'none' || soinTableContainer.style.display === '') {
+                soinTableContainer.style.display = 'block';
+            } else {
+                soinTableContainer.style.display = 'none';
+            }
+        }
         function navigateWeek(direction) {
             currentWeekOffset += direction;
             renderWeek();
