@@ -17,7 +17,13 @@ Route::get('users/{userId}/generate-invoice', [UserController::class, 'generateI
 Route::resource('users', UserController::class);
 Route::get('users/{user}/facturation', [UserController::class, 'facturation'])->name('users.facturation');
 
-Route::resource('chevaux', ChevalController::class);
+Route::get('/livreprestations', [LivrePrestationController::class, 'index'])->name('livreprestations.index');
+
+
+Route::resource('chevaux', ChevalController::class)->parameters([
+    'chevaux' => 'cheval'
+]);
+
 
 Route::resource('prestations', PrestationController::class);
 

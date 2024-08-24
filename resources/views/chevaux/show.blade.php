@@ -1,215 +1,203 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h1>Détails du cheval : {{ $cheval->nom }}</h1>
+<div class="container">
+    <h1 class="page-title"> {{ $cheval->nom }}</h1>
 
-        <!-- Détails du cheval -->
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        @if($cheval->photo)
-                            <img src="{{ asset('images/' . $cheval->photo) }}" class="img-fluid" alt="{{ $cheval->nom }}">
-                        @else
-                            <img src="{{ asset('images/default_cheval.jpg') }}" class="img-fluid" alt="{{ $cheval->nom }}">
-                        @endif
-                    </div>
-                    <div class="col-md-8">
-                        <p><strong>Nom :</strong> {{ $cheval->nom }}</p>
-                        <p><strong>Date de naissance :</strong> {{ \Carbon\Carbon::parse($cheval->date_de_naissance)->format('d/m/Y') }}</p>
-                        <p><strong>Poids :</strong> {{ $cheval->poids }} kg</p>
-                        <p><strong>Propriétaire :</strong> {{ $cheval->user ? $cheval->user->name . ' ' . $cheval->user->prenom : 'Aucun' }}</p>
-                    </div>
+    <!-- Détails du cheval -->
+    <div class="card cheval-detail-card mb-4">
+        <div class="card-body">
+            <div class="cheval-info-grid">
+                <div class="cheval-image-container">
+                    @if($cheval->photo)
+                        <img src="{{ asset('images/' . $cheval->photo) }}" class="img-fluid cheval-image" alt="{{ $cheval->nom }}">
+                    @else
+                        <img src="{{ asset('images/default_cheval.jpg') }}" class="img-fluid cheval-image" alt="{{ $cheval->nom }}">
+                    @endif
+                </div>
+                <div class="cheval-details">
+                    <p><strong>Nom :</strong> {{ $cheval->nom }}</p>
+                    <p><strong>Date de naissance :</strong> {{ \Carbon\Carbon::parse($cheval->date_de_naissance)->format('d/m/Y') }}</p>
+                    <p><strong>Poids :</strong> {{ $cheval->poids }} kg</p>
+                    <p><strong>Propriétaire :</strong> {{ $cheval->user ? $cheval->user->name . ' ' . $cheval->user->prenom : 'Aucun' }}</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Navigation entre les semaines -->
-        <div class="mb-4">
-            <h2>Calendrier de la semaine</h2>
-            <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-secondary" onclick="navigateWeek(-1)">Semaine précédente</button>
-                <span id="week-label"></span>
-                <button type="button" class="btn btn-secondary" onclick="navigateWeek(1)">Semaine suivante</button>
-            </div>
-        </div>
+    <!-- Inclure FullCalendar CSS et JS depuis le CDN -->
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 
-        <!-- Calendrier de la semaine -->
-        <div class="mb-4">
-            <form action="{{ route('livreprestation.store', $cheval->id) }}" method="POST">
-                @csrf
-                <div class="row" id="calendar-week">
-                    <!-- Les jours de la semaine seront générés par JavaScript -->
-                </div>
-                <button type="submit" class="btn btn-primary mt-3">Affecter les prestations</button>
-            </form>
-        </div>
-         <!-- Bouton Carnet de santé -->
-         <button class="btn btn-info mb-4" onclick="toggleSoinTable()">Carnet de santé</button>
+    <!-- Calendrier -->
+    <div id="calendar" class="mb-4"></div>
 
-<!-- Tableau du Carnet de santé (initialement caché) -->
-<div id="soinTableContainer" class="card mb-4" style="display: none;">
-    <div class="card-body">
-        <h2>Carnet de santé</h2>
+ 
 
-        <!-- Formulaire de filtrage -->
-        <form id="filtreSoins" method="GET" action="{{ route('chevaux.show', $cheval->id) }}">
-            <div class="row">
-                <div class="col-md-4">
-                    <input type="date" name="date_debut" class="form-control" value="{{ request('date_debut') }}" placeholder="Date de début">
-                </div>
-                <div class="col-md-4">
-                    <input type="date" name="date_fin" class="form-control" value="{{ request('date_fin') }}" placeholder="Date de fin">
-                </div>
-                <div class="col-md-4">
-                    <input type="text" name="nom_prestation" class="form-control" value="{{ request('nom_prestation') }}" placeholder="Nom de la prestation">
-                </div>
-                <div class="col-md-12 mt-2">
-                    <button type="submit" class="btn btn-primary">Filtrer</button>
+    <!-- Formulaire latéral d'affectation des prestations -->
+    <div id="prestations-section" class="side-form">
+        <button id="close-prestations-section" class="close-btn">&times;</button>
+        <h3>Affecter des prestations pour le <span id="selected-date"></span></h3>
+        <form action="{{ route('livreprestation.store', $cheval->id) }}" method="POST">
+            @csrf
+            <input type="hidden" id="selected-date-input" name="selected_date" value="">
+            <div id="prestations-list">
+                <div class="form-group">
+                    <select name="prestations[]" class="form-control mb-2">
+                        <option value="">-- Choisir une prestation --</option>
+                        @foreach($prestations as $prestation)
+                            <option value="{{ $prestation->id }}">{{ $prestation->nom }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
+            <button type="button" class="btn btn-success btn-sm" onclick="ajouterPrestation()">+ Ajouter une prestation</button>
+            <button type="submit" class="btn btn-primary mt-3">Affecter les prestations</button>
         </form>
+    </div>
+</div>
 
-        <!-- Tableau des soins -->
-        @if ($soins->isEmpty())
-            <p>Aucun soin enregistré.</p>
-        @else
-            <table class="table mt-4">
+<div class="historique-prestations">
+    <h2>Historique des prestations passées</h2>
+    @if ($historique->isEmpty())
+        <p class="no-prestations">Aucune prestation passée.</p>
+    @else
+        <div class="table-container">
+            <table class="table historique-table">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Nom de la prestation</th>
                         <th>Type</th>
                         <th>Prix</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($soins as $soin)
+                    @foreach ($historique as $entry)
                         <tr>
-                            <td>{{ \Carbon\Carbon::parse($soin->date_prestation)->format('d/m/Y') }}</td>
-                            <td>{{ $soin->prestation->nom }}</td>
-                            <td>{{ $soin->prestation->type }}</td>
-                            <td>{{ $soin->prestation->prix }} €</td>
+                            <td>{{ \Carbon\Carbon::parse($entry->date_prestation)->format('d/m/Y') }}</td>
+                            <td>{{ $entry->prestation->nom }}</td>
+                            <td>{{ $entry->prestation->type }}</td>
+                            <td>{{ $entry->prestation->prix }} €</td>
+                            <td>
+                                @if(Auth::user()->type_client === 'Gérant')
+                                    <form action="{{ route('livreprestation.destroy', $entry->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Annuler</button>
+                                    </form>
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        @endif
-    </div>
+        </div>
+    @endif
 </div>
 
-      <!-- Livre des prestations -->
-      <div>
-            <h2>Livre des prestations</h2>
-            @if ($livreDesPrestations->isEmpty())
-                <p>Aucune prestation enregistrée.</p>
-            @else
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Nom de la prestation</th>
-                            <th>Type</th>
-                            <th>Prix</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($livreDesPrestations as $entry)
-                            <tr>
-                                <td>{{ \Carbon\Carbon::parse($entry->date_prestation)->format('d/m/Y') }}</td>
-                                <td>{{ $entry->prestation->nom }}</td>
-                                <td>{{ $entry->prestation->type }}</td>
-                                <td>{{ $entry->prestation->prix }} €</td>
-                                <td>
-                                    @if(Auth::user()->type_client === 'Gérant')
-                                        <form action="{{ route('livreprestation.destroy', $entry->id) }}" method="POST" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Annuler</button>
-                                        </form>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            @endif
-        </div>
-    </div>
+<!-- CSS pour styliser le formulaire latéral et les boutons -->
+<style>
+    .side-form {
+        position: fixed;
+        top: 0;
+        right: -1000px;
+        width: 400px;
+        height: 100%;
+        background: white;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+        padding: 20px;
+        overflow-y: auto;
+        transition: right 0.3s ease-in-out;
+        z-index: 1000;
+    }
 
-    <script>
-        let currentWeekOffset = 0;
-        const prestations = @json($prestations);
+    .side-form.show {
+        right: 0;
+    }
 
+    .close-btn {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #333;
+        float: right;
+        cursor: pointer;
+    }
 
+   
 
+    .black-btn {
+        background-color: #000;
+        color: #fff;
+    }
 
-        function renderWeek() {
-            const startOfWeek = moment().startOf('isoWeek').add(currentWeekOffset, 'weeks');
-            const endOfWeek = startOfWeek.clone().endOf('isoWeek');
-            const calendarWeek = document.getElementById('calendar-week');
-            const weekLabel = document.getElementById('week-label');
-            calendarWeek.innerHTML = '';
-            weekLabel.textContent = `Semaine du ${startOfWeek.format('DD/MM/YYYY')} au ${endOfWeek.format('DD/MM/YYYY')}`;
+    .black-btn:hover {
+        background-color: #333;
+    }
 
-            for (let i = 0; i < 7; i++) {
-                const jour = startOfWeek.clone().add(i, 'days');
-                const dayDiv = document.createElement('div');
-                dayDiv.className = 'col-md-2';
-                dayDiv.innerHTML = `
-                    <h4>${jour.format('dddd DD/MM')}</h4>
-                    <div id="prestations_${jour.format('YYYY-MM-DD')}">
-                        <div class="form-group">
-                            <select name="prestations[${jour.format('YYYY-MM-DD')}][]" class="form-control mb-2">
-                                <option value="">-- Choisir une prestation --</option>
-                                ${prestations.map(prestation => `<option value="${prestation.id}">${prestation.nom}</option>`).join('')}
-                            </select>
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-success btn-sm mb-3" onclick="ajouterPrestation('${jour.format('YYYY-MM-DD')}')">+ Ajouter une prestation</button>
-                `;
-                calendarWeek.appendChild(dayDiv);
+    .gray-btn {
+        background-color: #888;
+        color: #fff;
+    }
+
+    .gray-btn:hover {
+        background-color: #aaa;
+    }
+
+    .button-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1001;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+</style>
+
+<!-- Script pour gérer l'ouverture et la fermeture du formulaire latéral -->
+<script>
+    $(document).ready(function() {
+        $('#calendar').fullCalendar({
+            locale: 'fr',
+            selectable: true,
+            selectHelper: true,
+            dayClick: function(date, jsEvent, view) {
+                selectDate(date.format());
             }
-        }
-
-        function toggleSoinTable() {
-            const soinTableContainer = document.getElementById('soinTableContainer');
-            if (soinTableContainer.style.display === 'none' || soinTableContainer.style.display === '') {
-                soinTableContainer.style.display = 'block';
-            } else {
-                soinTableContainer.style.display = 'none';
-            }
-        }
-        function navigateWeek(direction) {
-            currentWeekOffset += direction;
-            renderWeek();
-        }
-
-        function ajouterPrestation(date) {
-            const prestationDiv = document.getElementById('prestations_' + date);
-            const newPrestationSelect = document.createElement('div');
-            newPrestationSelect.classList.add('form-group');
-            newPrestationSelect.innerHTML = `
-                <select name="prestations[${date}][]" class="form-control mb-2">
-                    <option value="">-- Choisir une prestation --</option>
-                    ${prestations.map(prestation => `<option value="${prestation.id}">${prestation.nom}</option>`).join('')}
-                </select>
-            `;
-            prestationDiv.appendChild(newPrestationSelect);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            moment.locale('fr'); // Mettre le calendrier en français
-            renderWeek(); // Afficher la semaine actuelle au chargement de la page
         });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/fr.min.js"></script>
 
+        $('#add-prestation-btn, #affect-prestation-btn').on('click', function() {
+            $('#prestations-section').addClass('show');
+        });
+
+        $('#close-prestations-section').on('click', function() {
+            $('#prestations-section').removeClass('show');
+        });
+    });
+
+    function selectDate(dateStr) {
+        $('#selected-date').text(new Date(dateStr).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }));
+        $('#selected-date-input').val(dateStr);
+        $('#prestations-section').addClass('show');
+    }
+
+    function ajouterPrestation() {
+                const prestationsList = $('#prestations-list');
+                prestationsList.append(`
+                    <div class="form-group">
+                        <select name="prestations[]" class="form-control mb-2">
+                            <option value="">-- Choisir une prestation --</option>
+                            @foreach($prestations as $prestation)
+                                <option value="{{ $prestation->id }}">{{ $prestation->nom }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                `);
+            }
+</script>
 @endsection
-
-
- 
-

@@ -111,9 +111,16 @@ class ChevalController extends Controller
     // Afficher le formulaire pour modifier un cheval
     public function edit(Cheval $cheval)
     {
+        // Récupérer le cheval par son ID
+        
+    
+        // Récupérer tous les utilisateurs disponibles
         $users = User::all();
-    return view('chevaux.edit', compact('cheval', 'users'));
+    
+        // Retourner la vue avec les données du cheval et des utilisateurs
+        return view('chevaux.edit', compact('cheval', 'users'));
     }
+    
 
     // Mettre à jour un cheval dans la base de données
     public function update(Request $request, Cheval $cheval)

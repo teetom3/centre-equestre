@@ -1,0 +1,55 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h1 class="page-title">Modifier le cheval : {{ $cheval->nom }}</h1>
+
+    <!-- Formulaire de modification du cheval -->
+    <div class="card cheval-detail-card mb-4">
+        <div class="card-body">
+            <form action="{{ route('chevaux.update', $cheval->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <div class="form-group mb-3">
+                    <label for="nom">Nom du cheval</label>
+                    <input type="text" name="nom" id="nom" class="form-control" value="{{ old('nom', $cheval->nom) }}" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="date_de_naissance">Date de naissance</label>
+                    <input type="date" name="date_de_naissance" id="date_de_naissance" class="form-control" value="{{ old('date_de_naissance', $cheval->date_de_naissance) }}" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="poids">Poids (kg)</label>
+                    <input type="number" name="poids" id="poids" class="form-control" value="{{ old('poids', $cheval->poids) }}" required>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="user_id">Propriétaire</label>
+                    <select name="user_id" id="user_id" class="form-control">
+                        <option value="">-- Aucun propriétaire --</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ $cheval->user_id == $user->id ? 'selected' : '' }}>
+                                {{ $user->name }} {{ $user->prenom }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="photo">Photo du cheval (optionnel)</label>
+                    <input type="file" name="photo" id="photo" class="form-control">
+                    @if($cheval->photo)
+                        <img src="{{ asset('images/' . $cheval->photo) }}" class="img-fluid mt-2" alt="{{ $cheval->nom }}" width="150">
+                    @endif
+                </div>
+
+                <button type="submit" class="btn btn-primary">Mettre à jour le cheval</button>
+                <a href="{{ route('chevaux.index') }}" class="btn btn-secondary">Annuler</a>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

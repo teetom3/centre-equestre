@@ -1,0 +1,72 @@
+body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: 'Helvetica', sans-serif;
+}
+
+.navbar {
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.navbar a {
+    color: #000000;
+}
+
+.navbar a:hover {
+    color: #666666;
+}
+
+.form-container {
+    background-color: #FFFFFF;
+    border: 1px solid #DDDDDD;
+    padding: 20px;
+    border-radius: 6px;
+}
+
+.input-field {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.button {
+    background-color: #000000;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #333333;
+}
+
+.card {
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
+.card h3 {
+    color: #000000;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.card p {
+    color: #444444;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.card .button {
+    width: 100%;
+    margin-bottom: 10px;
+}
