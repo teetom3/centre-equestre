@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/users/create.css') }}">
+@endpush
+
+
 @section('content')
     <div class="container">
         <h1>Créer un nouvel utilisateur</h1>
@@ -51,7 +56,7 @@
                 <input type="email" name="email_de_facturation" id="email_de_facturation" class="form-control" value="{{ old('email_de_facturation') }}">
             </div>
 
-            <div class="form-group">
+            <div class="form-group full-width">
                 <label for="type_client">Type de client</label>
                 <select name="type_client" id="type_client" class="form-control" required>
                     <option value="Gérant">Gérant</option>
@@ -62,7 +67,9 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary mt-3">Créer l'utilisateur</button>
+            <div class="form-group full-width">
+                <button type="submit" class="btn btn-primary mt-3">Créer l'utilisateur</button>
+            </div>
         </form>
     </div>
 
@@ -81,3 +88,4 @@
         }
     </script>
 @endsection
+

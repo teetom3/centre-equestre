@@ -1,4 +1,9 @@
 @extends('layouts.app')
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/chevaux/edit.css') }}">
+@endpush
+
+
 
 @section('content')
 <div class="container">

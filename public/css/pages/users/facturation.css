@@ -1,0 +1,141 @@
+/* Container styling */
+.container {
+    max-width: 1000px; /* Set a max-width for the container */
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Page title styling */
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Form styling */
+  form {
+    margin-bottom: 20px;
+  }
+  
+  form .row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  form .form-control {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    transition: border-color 0.3s ease;
+  }
+  
+  form .form-control:focus {
+    border-color: #333;
+    outline: none;
+  }
+  
+  /* Button styling */
+  .btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-primary {
+    background-color: #000; /* Black color for the primary button */
+    color: #ffffff;
+  }
+  
+  .btn-success {
+    background-color: #28a745; /* Green color for success button */
+    color: #ffffff;
+  }
+  
+  .btn:hover {
+    opacity: 0.8; /* Slight transparency on hover */
+    transform: translateY(-2px); /* Slight lift effect */
+  }
+  
+  .btn-sm {
+    padding: 5px 10px; /* Smaller padding for small buttons */
+  }
+  
+  /* Card styling for each horse's invoice */
+  .invoice-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px; /* Space between cards */
+    padding: 20px; /* Internal padding for content */
+    transition: transform 0.2s ease; /* Smooth hover effect */
+  }
+  
+  .invoice-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+  }
+  
+  /* Table styling */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .table thead th {
+    background-color: #f0f0f0; /* Light gray for the header */
+    color: #333;
+    text-align: left;
+    padding: 15px;
+    font-weight: bold;
+  }
+  
+  .table tbody tr {
+    border-bottom: 1px solid #eee; /* Subtle border for each row */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  .table tbody tr:hover {
+    background-color: #f9f9f9; /* Light hover effect */
+  }
+  
+  .table tbody td {
+    padding: 15px;
+    color: #555;
+  }
+  
+  /* Total section styling */
+  .total-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding: 20px;
+    }
+  
+    .form .row {
+      flex-direction: column; /* Stack form controls vertically on smaller screens */
+    }
+  
+    .btn {
+      width: 100%; /* Full width buttons on smaller screens */
+      margin-bottom: 10px; /* Margin bottom for spacing */
+    }
+  }
+  

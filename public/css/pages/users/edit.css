@@ -1,0 +1,105 @@
+/* Container styling */
+.container {
+    
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Page title styling */
+  .page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Card styling */
+  .card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+  }
+  
+  /* Card body styling */
+  .card-body {
+    padding: 20px;
+  }
+  
+  /* Form styling */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Space between form groups */
+  }
+  
+  /* Form group styling */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; /* Space between each form group */
+  }
+  
+  /* Label styling */
+  .form-group label {
+    font-weight: bold; /* Emphasize labels */
+    margin-bottom: 8px; /* Space between label and input */
+    color: #333;
+  }
+  
+  /* Input and Select styling */
+  .form-control {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-control:focus {
+    border-color: #333;
+    outline: none;
+    background-color: #fff;
+  }
+  
+  /* Button styling */
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-right: 10px; /* Space between buttons */
+  }
+  
+  .btn-primary {
+    background-color: #000; /* Black for primary button */
+    color: #ffffff;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d; /* Gray for secondary button */
+    color: #ffffff;
+  }
+  
+  .btn:hover {
+    opacity: 0.9; /* Slight transparency on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .container {
+      padding: 20px;
+    }
+  
+    .btn {
+      width: 100%; /* Full width buttons on smaller screens */
+      margin-bottom: 10px; /* Margin bottom for spacing */
+    }
+  }
+  

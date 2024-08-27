@@ -27,42 +27,34 @@
         <button type="submit" class="btn btn-primary mt-3">Appliquer les filtres</button>
     </form>
 
-    <div class="container">
-    <h2>Historique des prestations passées</h2>
-    @if ($historique->isEmpty())
-        <p>Aucune prestation passée.</p>
+    <!-- Tableau des prestations -->
+    @if($prestations->isEmpty())
+        <p>Aucune prestation trouvée.</p>
     @else
         <table class="table">
             <thead>
                 <tr>
                     <th>Date</th>
                     <th>Nom de la prestation</th>
-                    <th>Type</th>
+                    <th>Cheval</th>
                     <th>Prix</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($historique as $entry)
-                    <tr>
-                        <td>{{ \Carbon\Carbon::parse($entry->date_prestation)->format('d/m/Y') }}</td>
-                        <td>{{ $entry->prestation->nom }}</td>
-                        <td>{{ $entry->prestation->type }}</td>
-                        <td>{{ $entry->prestation->prix }} €</td>
-                        <td>
-                            @if(Auth::user()->type_client === 'Gérant')
-                                <form action="{{ route('livreprestation.destroy', $entry->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Annuler</button>
-                                </form>
-                            @endif
-                        </td>
+                @foreach($prestations as $prestation)
+                    @php
+                        // Comparer directement avec la date formatée 'Y-m-d'
+                        $isToday = $prestation->date_prestation == $today;
+                    @endphp
+                    <tr class="{{ $isToday ? 'bg-warning' : '' }}">
+                        <td>{{ \Carbon\Carbon::parse($prestation->date_prestation)->format('d/m/Y') }}</td>
+                        <td>{{ $prestation->prestation->nom }}</td>
+                        <td>{{ $prestation->cheval->nom }}</td>
+                        <td>{{ number_format($prestation->prestation->prix, 2) }} €</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     @endif
-</div>
 </div>
 @endsection

@@ -1,5 +1,7 @@
 @extends('layouts.app')
-
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/users/index.css') }}">
+@endpush
 @section('content')
     <div class="container">
         <h1>Gérer les utilisateurs</h1>
@@ -65,3 +67,4 @@
         </div>
     </div>
 @endsection
+

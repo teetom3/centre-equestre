@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/users/facturation.css') }}">
+@endpush
+
 @section('content')
     <div class="container">
         <h1>Facturation pour {{ $user->name }}</h1>
@@ -73,4 +77,28 @@
             </div>
         @endif
     </div>
+
+    <!--Prestation à validé -->
+    @foreach ($prestations as $prestation)
+    <tr>
+        <td>{{ $prestation->cheval->nom }}</td>
+        <td>{{ $prestation->prestation->nom }}</td>
+        <td>{{ $prestation->date_prestation }}</td>
+        <td>{{ $prestation->etat }}</td>
+        <td>
+            @if(in_array(auth()->user()->type_client, ['Moniteur', 'Gérant', 'Vétérinaire', 'Maréchal']))
+                <form action="{{ route('livreprestation.changeState', $prestation->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    <select name="etat" onchange="this.form.submit()">
+                        <option value="en attente" {{ $prestation->etat == 'en attente' ? 'selected' : '' }}>En attente</option>
+                        <option value="validé" {{ $prestation->etat == 'validé' ? 'selected' : '' }}>Validé</option>
+                        <option value="facturé" {{ $prestation->etat == 'facturé' ? 'selected' : '' }}>Facturé</option>
+                        <option value="paid" {{ $prestation->etat == 'paid' ? 'selected' : '' }}>Payé</option>
+                    </select>
+                </form>
+            @endif
+        </td>
+    </tr>
+@endforeach
+
 @endsection

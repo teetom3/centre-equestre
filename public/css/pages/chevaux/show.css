@@ -1,0 +1,180 @@
+/* General container styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Page title styling */
+  .page-title {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  /* Grid layout for widgets */
+  .widget-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns layout for desktop */
+    gap: 20px; /* Space between widgets */
+  }
+  
+  /* Card styling for widgets */
+  .card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Styling for cheval details card */
+  .cheval-detail-card {
+    grid-column: span 2; /* Make this widget span across two columns for desktop */
+  }
+  
+  /* Round image styling with black border */
+  .cheval-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .cheval-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid #000; /* Black border */
+    transition: transform 0.3s ease; /* Smooth transition on hover */
+  }
+  
+  .cheval-detail-card:hover .cheval-image {
+    transform: scale(1.1); /* Slight zoom on hover */
+  }
+  
+  /* Side form styling */
+  .side-form {
+    position: fixed;
+    top: 0;
+    right: -1000px;
+    width: 400px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    overflow-y: auto;
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+  }
+  
+  .side-form.show {
+    right: 0;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #333;
+    float: right;
+    cursor: pointer;
+  }
+  
+  /* Button styling */
+  .btn {
+    padding: 8px 15px;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 5px;
+  }
+  
+  .btn-primary {
+    background-color: #000; /* Black color for primary button */
+    color: #ffffff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #333;
+  }
+  
+  .btn-success {
+    background-color: #444; /* Dark gray for success button */
+    color: #ffffff;
+  }
+  
+  .btn-success:hover {
+    background-color: #555;
+  }
+  
+  .btn-danger {
+    background-color: #222; /* Darker gray for danger button */
+    color: #ffffff;
+  }
+  
+  .btn-danger:hover {
+    background-color: #444;
+  }
+  
+  /* Table styling for historical prestations */
+  .historique-prestations {
+    margin-top: 40px;
+  }
+  
+  .historique-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .historique-table th, .historique-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .historique-table th {
+    background-color: #f7f7f7;
+    color: #333;
+  }
+  
+  .no-prestations {
+    color: #888;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .widget-grid {
+      grid-template-columns: 1fr; /* Change to 1 column layout for mobile */
+    }
+  
+    .cheval-detail-card {
+      grid-column: span 1; /* Make sure it spans only one column */
+    }
+  
+    .side-form {
+      width: 70%;
+      right: -1000px;
+    }
+  
+    .side-form.show {
+      right: 0;
+    }
+    .mobile_disable{
+        display: none;
+    }
+  }
+  

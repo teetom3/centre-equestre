@@ -83,7 +83,7 @@ class ChevalController extends Controller
 
         // Récupérer l'historique des prestations passées
         $historique = LivrePrestation::where('cheval_id', $cheval->id)
-            ->where('date_prestation', '<', Carbon::now())
+            
             ->with('prestation')
             ->orderBy('date_prestation', 'desc')
             ->get();

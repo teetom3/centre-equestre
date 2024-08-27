@@ -1,15 +1,15 @@
 const mix = require('laravel-mix');
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css')
-   .sourceMaps();
+// Compilation des fichiers CSS principaux
+mix.css('resources/css/app.css', 'public/css')
+   .css('resources/css/pages/home.css', 'public/css/pages')
+   .css('resources/css/pages/dashboard.css', 'public/css/pages');
 
-// FullCalendar JS & CSS
-mix.js('node_modules/@fullcalendar/core/main.js', 'public/js')
-   .js('node_modules/@fullcalendar/daygrid/main.js', 'public/js')
-   .js('node_modules/@fullcalendar/interaction/main.js', 'public/js');
+// Compilation des fichiers CSS dans le sous-dossier "chevaux"
+mix.css('resources/css/pages/chevaux/index.css', 'public/css/pages/chevaux')
+   .css('resources/css/pages/chevaux/show.css', 'public/css/pages/chevaux')
+   .css('resources/css/pages/chevaux/edit.css', 'public/css/pages/chevaux');
 
-mix.styles([
-    'node_modules/@fullcalendar/core/main.css',
-    'node_modules/@fullcalendar/daygrid/main.css',
-], 'public/css/fullcalendar.css');
+   // Compilation des fichiers CSS dans le sous-dossier "users"
+
+   mix.css('resources/css/pages/users/dashboard.css.css', 'public/css/pages/users')
