@@ -9,6 +9,7 @@
 
 @section('content')
 <div class="container">
+<a href="{{ route('chevaux.create') }}" class="btn btn-primary mb-3">Créer un nouveau cheval</a>
     <h1 class="page-title">Liste des chevaux</h1>
 
     <!-- Liste des chevaux sous forme de cartes -->

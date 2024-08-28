@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/prestations/create.css') }}">
+@endpush
 
 @section('content')
     <div class="container">
@@ -16,7 +19,6 @@
                     <option value="Service">Service</option>
                     <option value="Produit">Produit</option>
                     <option value="Soin">Soin</option>
-                    
                 </select>
             </div>
 

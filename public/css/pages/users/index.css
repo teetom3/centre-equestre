@@ -74,25 +74,7 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
-  .btn-primary {
-    background-color: #000; /* Black color for the primary button */
-    color: #ffffff;
-  }
-  
-  .btn-warning {
-    background-color: #ffb700; /* Gold color for edit button */
-    color: #fff;
-  }
-  
-  .btn-info {
-    background-color: #17a2b8; /* Teal color for info button */
-    color: #fff;
-  }
-  
-  .btn-danger {
-    background-color: #dc3545; /* Red color for delete button */
-    color: #fff;
-  }
+
   
   .btn:hover {
     opacity: 0.8; /* Slight transparency on hover */

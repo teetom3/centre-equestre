@@ -4,6 +4,7 @@
 @endpush
 @section('content')
     <div class="container">
+    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Créer un nouveau cheval</a>
         <h1>Gérer les utilisateurs</h1>
 
         <!-- Formulaire de filtrage -->

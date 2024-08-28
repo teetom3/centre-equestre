@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/pages/prestations/index.css') }}">
+@endpush
 @section('content')
     <div class="container">
         <h1>Liste des prestations</h1>
