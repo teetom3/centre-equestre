@@ -10,6 +10,9 @@ use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\DashboardController;
 
+
+Route::get('/tableau-de-bord/gerant', [DashboardController::class, 'gerantDashboard'])->name('dashboard.gerant');
+
 Route::get('/', [EvenementController::class, 'landingPage'])->name('landingPage');
 
 
