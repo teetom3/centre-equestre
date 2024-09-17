@@ -4,7 +4,7 @@
 @endpush
 @section('content')
     <div class="container">
-    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Créer un nouveau cheval</a>
+    <a href="{{ route('users.create') }}" class="btn-create">Créer un nouvel utilisateur</a>
         <h1>Gérer les utilisateurs</h1>
 
         <!-- Formulaire de filtrage -->
@@ -49,8 +49,8 @@
                         <td>{{ $user->telephone }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm">Modifier</a>
-                            <a href="{{ route('users.facturation', $user->id) }}" class="btn btn-info btn-sm">Facturation</a>
+                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-create btn-sm">Modifier</a>
+                            <a href="{{ route('users.facturation', $user->id) }}" class="btn btn-create btn-sm">Facturation</a>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')

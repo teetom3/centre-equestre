@@ -6,7 +6,7 @@
 @section('content')
     <div class="container">
         <h1>Liste des prestations</h1>
-        <a href="{{ route('prestations.create') }}" class="btn btn-primary mb-3">Créer une nouvelle prestation</a>
+        <a href="{{ route('prestations.create') }}" class="btn btn-info">Créer une nouvelle prestation</a>
         <table class="table">
             <thead>
                 <tr>

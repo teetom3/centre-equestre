@@ -1,17 +1,20 @@
 @extends('layouts.app')
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/pages/levenements/landing.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/pages/evenements/index.css') }}">
 @endpush
 
 @section('content')
     <div class="container">
-        <h1 class="page-title">Liste des événements</h1>
-        <a href="{{ route('evenements.create') }}" class="btn btn-primary mb-3">Créer un nouvel événement</a>
+        <h1 class="page-title text-center">Gestion des Événements</h1>
+        <div class="text-center mb-4">
+            <a href="{{ route('evenements.create') }}" class="btn btn-primary btn-create-event">Créer un nouvel événement</a>
+        </div>
+        
         @if ($evenements->isEmpty())
-            <p class="no-events">Aucun événement disponible.</p>
+            <p class="no-events text-center">Aucun événement disponible pour le moment.</p>
         @else
             <div class="table-container">
-                <table class="table events-table">
+                <table class="table events-table table-hover">
                     <thead>
                         <tr>
                             <th>Nom</th>
@@ -29,9 +32,9 @@
                                 <td>{{ $evenement->nombre_de_place }}</td>
                                 <td>
                                     @if($evenement->image_de_presentation)
-                                        <img src="{{ asset('images/' . $evenement->image_de_presentation) }}" alt="{{ $evenement->nom }}" class="event-image">
+                                        <img src="{{ asset('images/' . $evenement->image_de_presentation) }}" alt="{{ $evenement->nom }}" class="event-image rounded">
                                     @else
-                                        <span class="no-image">Pas d'image</span>
+                                        <span class="no-image text-muted">Pas d'image</span>
                                     @endif
                                 </td>
                                 <td>

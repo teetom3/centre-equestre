@@ -9,21 +9,43 @@ use App\Http\Controllers\LivrePrestationController;
 use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Middleware\GerantMiddleware;
 
 
+
+Route::middleware([GerantMiddleware::class])->group(function (){
+
+    
 Route::get('/tableau-de-bord/gerant', [DashboardController::class, 'gerantDashboard'])->name('dashboard.gerant');
+
+Route::get('/livre-prestations', [LivrePrestationController::class, 'indexForGerant'])->name('livre-prestations.index');
+
+
+Route::get('users/{userId}/generate-invoice', [UserController::class, 'generateInvoice'])->name('users.generateInvoice');
+Route::get('users/{user}/facturation', [UserController::class, 'facturation'])->name('users.facturation');
+
+Route::get('/livreprestations', [LivrePrestationController::class, 'index'])->name('livreprestations.index');
+Route::get('/ajout-prestations-masse', [LivrePrestationController::class, 'massAddForm'])->name('livre-prestations.mass-add');
+Route::post('/ajout-prestations-masse', [LivrePrestationController::class, 'massAdd'])->name('livre-prestations.mass-add.store');
+Route::resource('prestations', PrestationController::class);
+Route::post('/livreprestations/{id}/change-state', [LivrePrestationController::class, 'changeState'])->name('livreprestation.changeState');
+    });
+
+
+
+
+
+
+
+Route::get('/dashboard-marechal', [DashboardController::class, 'marechalDashboard'])->name('dashboard.marechal');
+Route::get('/tableau-de-bord/veterinaire', [DashboardController::class, 'veterinaireDashboard'])->name('dashboard.veterinaire');
+
 
 Route::get('/', [EvenementController::class, 'landingPage'])->name('landingPage');
 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-
-Route::get('users/{userId}/generate-invoice', [UserController::class, 'generateInvoice'])->name('users.generateInvoice');
 
 Route::resource('users', UserController::class);
-Route::get('users/{user}/facturation', [UserController::class, 'facturation'])->name('users.facturation');
-
-Route::get('/livreprestations', [LivrePrestationController::class, 'index'])->name('livreprestations.index');
 
 
 Route::resource('chevaux', ChevalController::class)->parameters([
@@ -31,7 +53,7 @@ Route::resource('chevaux', ChevalController::class)->parameters([
 ]);
 
 
-Route::resource('prestations', PrestationController::class);
+
 
 Route::resource('evenements', EvenementController::class);
 
@@ -44,7 +66,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::post('livreprestation/{cheval}', [LivrePrestationController::class, 'store'])->name('livreprestation.store')->middleware('auth');
 
-Route::post('/livreprestations/{id}/change-state', [LivrePrestationController::class, 'changeState'])->name('livreprestation.changeState');
+
 
 
 Route::delete('livreprestation/{id}', [LivrePrestationController::class, 'destroy'])->name('livreprestation.destroy')->middleware('auth');

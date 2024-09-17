@@ -19,6 +19,8 @@
                     <option value="Service">Service</option>
                     <option value="Produit">Produit</option>
                     <option value="Soin">Soin</option>
+                    <option value="Vétérinaire">Vétérinaire</option>
+                    <option value="Marechal">Marechal</option>
                 </select>
             </div>
 

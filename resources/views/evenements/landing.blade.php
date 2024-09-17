@@ -30,7 +30,7 @@
                                 <h5 class="card-title text-center">{{ $evenement->nom }}</h5>
                                 <p class="card-text text-center">{{ $evenement->type }}</p>
                                 <div class="text-center">
-                                    <a href="{{ route('inscriptions.create', $evenement->id) }}" class="btn btn-primary">En savoir plus</a>
+                                    <a href="{{ route('evenements.show', $evenement->id) }}" class="btn btn-primary">En savoir plus</a>
                                 </div>
                             </div>
                         </div>

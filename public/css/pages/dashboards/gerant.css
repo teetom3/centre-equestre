@@ -1,0 +1,98 @@
+  /* Container styling */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Page title styling */
+.page-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+/* Grid system */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Widget styling */
+.widget {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.widget-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Prestation card styling */
+.prestation-card {
+    padding: 15px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.prestation-card.bg-warning {
+    background-color: #fff3cd;
+}
+
+.prestation-card.bg-success {
+    background-color: #d4edda;
+}
+
+/* Button styling */
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 8px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Scrollable list of prestations */
+.prestations-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 28px;
+    }
+
+    .widget-title {
+        font-size: 20px;
+    }
+
+    .btn-success {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+}

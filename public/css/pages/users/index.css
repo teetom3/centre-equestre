@@ -84,6 +84,16 @@
   .btn-sm {
     padding: 5px 10px; /* Smaller padding for small buttons */
   }
+  .btn-create {
+    background-color: #000;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
   
   /* Pagination styling */
   .d-flex {

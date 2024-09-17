@@ -25,7 +25,7 @@ class PrestationController extends Controller
     {
         $request->validate([
             'nom' => 'required|string|max:255',
-            'type' => 'required|string|in:Service,Produit,Soin',
+            'type' => 'required|string|in:Service,Produit,Soin,Vétérinaire,Marechal',
             'prix' => 'required|numeric',
             'tva' => 'required|numeric',
         ]);
@@ -57,7 +57,7 @@ class PrestationController extends Controller
     {
         $request->validate([
             'nom' => 'required|string|max:255',
-            'type' => 'required|string|in:Service,Produit,Soin',
+            'type' => 'required|string|in:Service,Produit,Soin,Vétérinaire,Marechal',
             'prix' => 'required|numeric',
             'tva' => 'required|numeric',
         ]);

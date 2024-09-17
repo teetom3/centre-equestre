@@ -15,9 +15,14 @@ class ChevalController extends Controller
     // Afficher la liste des chevaux
     public function index()
     {
-        // Pour les gérants, on affiche tous les chevaux
-        $chevaux = Cheval::with('user')->paginate(10);
-
+        if (auth()->user()->type_client === 'Client') {
+            // Si l'utilisateur est un client, on ne montre que ses propres chevaux
+            $chevaux = Cheval::where('user_id', auth()->id())->with('user')->paginate(10);
+        } else {
+            // Si l'utilisateur est un gérant (ou tout autre rôle), on montre tous les chevaux
+            $chevaux = Cheval::with('user')->paginate(10);
+        }
+    
         return view('chevaux.index', compact('chevaux'));
     }
 
