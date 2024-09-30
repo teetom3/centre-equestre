@@ -22,6 +22,15 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="col-md-3">
+            <select name="pension" class="form-control">
+                <option value="">-- Filtrer par type de pension --</option>
+                <option value="pension 1" {{ request('pension') == 'pension 1' ? 'selected' : '' }}>Pension 1</option>
+                <option value="pension 2" {{ request('pension') == 'pension 2' ? 'selected' : '' }}>Pension 2</option>
+                <option value="pension 3" {{ request('pension') == 'pension 3' ? 'selected' : '' }}>Pension 3</option>
+                <option value="pension 4" {{ request('pension') == 'pension 4' ? 'selected' : '' }}>Pension 4</option>
+            </select>
+        </div>
                 <div class="col-md-4">
                     <button type="submit" class="btn btn-primary">Filtrer</button>
                 </div>

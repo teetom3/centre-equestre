@@ -34,7 +34,7 @@ class DashboardController extends Controller
                         return $item->prestation->type;
                     });
                       // Récupérer les événements avec les inscrits
-    $evenements = Evenement::with('inscriptions.user', 'inscriptions.cheval')->orderBy('date', 'desc')->get();
+    $evenements = Evenement::with('inscriptions.user', 'inscriptions.cheval')->get();
 
     return view('dashboards.gerant', compact('prestationsParType', 'evenements', 'today'));
 

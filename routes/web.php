@@ -10,6 +10,7 @@ use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\GerantMiddleware;
+use App\Http\Controllers\FinanceController;
 
 
 
@@ -17,6 +18,9 @@ Route::middleware([GerantMiddleware::class])->group(function (){
 
     
 Route::get('/tableau-de-bord/gerant', [DashboardController::class, 'gerantDashboard'])->name('dashboard.gerant');
+
+Route::get('/dashboard-financier', [FinanceController::class, 'index'])->name('dashboard.finance');
+
 
 Route::get('/livre-prestations', [LivrePrestationController::class, 'indexForGerant'])->name('livre-prestations.index');
 
@@ -29,7 +33,20 @@ Route::get('/ajout-prestations-masse', [LivrePrestationController::class, 'massA
 Route::post('/ajout-prestations-masse', [LivrePrestationController::class, 'massAdd'])->name('livre-prestations.mass-add.store');
 Route::resource('prestations', PrestationController::class);
 Route::post('/livreprestations/{id}/change-state', [LivrePrestationController::class, 'changeState'])->name('livreprestation.changeState');
+
+
+Route::resource('users', UserController::class);
     });
+
+
+
+
+
+    Route::get('/evenements/{evenement}', [EvenementController::class, 'show']);
+
+
+
+
 
 
 
@@ -45,7 +62,7 @@ Route::get('/', [EvenementController::class, 'landingPage'])->name('landingPage'
 
 
 
-Route::resource('users', UserController::class);
+
 
 
 Route::resource('chevaux', ChevalController::class)->parameters([
@@ -56,6 +73,8 @@ Route::resource('chevaux', ChevalController::class)->parameters([
 
 
 Route::resource('evenements', EvenementController::class);
+
+
 
 Route::resource('inscriptions', InscriptionController::class);
 Route::post('evenements/{evenement}/inscrire', [InscriptionController::class, 'inscrire'])->name('evenements.inscrire');

@@ -14,6 +14,8 @@ class Cheval extends Model
         'date_de_naissance',
         'photo',
         'poids',
+        'pension',
+        'commentaire',  
     ];
 
     public function inscriptions()

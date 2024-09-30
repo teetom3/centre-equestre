@@ -160,6 +160,10 @@ public function massAddForm(Request $request)
         $query->where('user_id', $request->proprietaire_id);
     }
 
+    if ($request->input('pension')) {
+        $query->where('pension', $request->input('pension'));
+    }
+
     // Récupérer les résultats filtrés
     $chevaux = $query->get();
 

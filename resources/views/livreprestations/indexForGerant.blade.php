@@ -76,17 +76,17 @@
                             <td>{{ $livrePrestation->prestation->nom }}</td>
                             <td>{{ $livrePrestation->cheval->nom }}</td>
                             <td>{{ $livrePrestation->cheval->user->name }}</td>
+                            <td>{{ $livrePrestation->etat }}</td>
                             <td>
-                                <form action="{{ route('livreprestation.changeState', $prestation->id) }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="livre_prestation_id" value="{{ $livrePrestation->id }}">
-                                    <select name="etat" class="form-control" onchange="this.form.submit()">
-                                        <option value="en attente" {{ $livrePrestation->etat == 'en attente' ? 'selected' : '' }}>En attente</option>
-                                        <option value="validé" {{ $livrePrestation->etat == 'validé' ? 'selected' : '' }}>Validé</option>
-                                        <option value="facturé" {{ $livrePrestation->etat == 'facturé' ? 'selected' : '' }}>Facturé</option>
-                                        <option value="payé" {{ $livrePrestation->etat == 'payé' ? 'selected' : '' }}>Payé</option>
-                                    </select>
-                                </form>
+                            <form action="{{ route('livreprestation.changeState',  $livrePrestation->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    <select name="etat" onchange="this.form.submit()">
+                    <option value="en attente" {{ old('etat', $livrePrestation->etat) == 'en attente' ? 'selected' : '' }}>En attente</option>
+        <option value="validé" {{ old('etat', $livrePrestation->etat) == 'validé' ? 'selected' : '' }}>Validé</option>
+        <option value="facturé" {{ old('etat', $livrePrestation->etat) == 'facturé' ? 'selected' : '' }}>Facturé</option>
+        <option value="paid" {{ old('etat', $livrePrestation->etat) == 'paid' ? 'selected' : '' }}>Payé</option>
+    </select>
+                </form>
                             </td>
                             <td>
                                 <form action="{{ route('livreprestation.destroy', $livrePrestation->id) }}" method="POST" style="display:inline;">

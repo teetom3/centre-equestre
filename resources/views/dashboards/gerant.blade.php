@@ -42,7 +42,7 @@
             @foreach ($evenements as $evenement)
             <div class="widget bg-white rounded-lg shadow-lg p-4">
                 <h3 class="widget-title text-xl font-semibold">{{ $evenement->nom }}</h3>
-                <p><strong>Date :</strong> {{ \Carbon\Carbon::parse($evenement->date)->format('d/m/Y') }}</p>
+                
                 <p><strong>Type :</strong> {{ $evenement->type }}</p>
 
                 <h4 class="text-lg mt-3">Inscrits :</h4>

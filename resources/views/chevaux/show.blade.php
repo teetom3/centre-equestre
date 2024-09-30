@@ -27,6 +27,9 @@
                         <p><strong>Nom :</strong> {{ $cheval->nom }}</p>
                         <p><strong>Date de naissance :</strong> {{ \Carbon\Carbon::parse($cheval->date_de_naissance)->format('d/m/Y') }}</p>
                         <p><strong>Poids :</strong> {{ $cheval->poids }} kg</p>
+                        <p><strong>Commentaire :</strong> {{ $cheval->commentaire ? $cheval->commentaire : 'Pas de commentaire' }}</p>
+
+                        <p><strong>Pension :</strong> {{ $cheval->pension }} </p>
                         <p><strong>Propriétaire :</strong> {{ $cheval->user ? $cheval->user->name . ' ' . $cheval->user->prenom : 'Aucun' }}</p>
                     </div>
                 </div>
@@ -81,7 +84,7 @@
                             <tbody>
                                 @foreach ($historique as $entry)
                                     <tr>
-                                        <td>{{ ($entry->date_prestation)}}</td>
+                                        <td>{{ \Carbon\Carbon::parse($entry->date_prestation)->format('d/m/Y') }}</td>
                                         <td>{{ $entry->prestation->nom }}</td>
                                         <td class="mobile_disable">{{ $entry->prestation->type }}</td>
                                         <td>{{ $entry->prestation->prix }} €</td>

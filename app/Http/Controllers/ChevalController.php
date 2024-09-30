@@ -42,12 +42,16 @@ class ChevalController extends Controller
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'poids' => 'required|numeric',
         'user_id' => 'nullable|exists:users,id',
+        'pension' => 'nullable|string',
+        'commentaire' => 'nullable|string',
     ]);
 
     $cheval = new Cheval;
     $cheval->nom = $request->nom;
     $cheval->date_de_naissance = $request->date_de_naissance;
     $cheval->poids = $request->poids;
+    $cheval->pension = $request->pension;
+    $cheval->commentaire = $request->commentaire;
     $cheval->user_id = $request->user_id; // Lier au user si un user_id est fourni
 
     if ($request->hasFile('photo')) {
@@ -136,11 +140,15 @@ class ChevalController extends Controller
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'poids' => 'required|numeric',
         'user_id' => 'nullable|exists:users,id',
+        'pension' => 'nullable|string',
+        'commentaire' => 'nullable|string',
     ]);
 
     $cheval->nom = $request->nom;
     $cheval->date_de_naissance = $request->date_de_naissance;
     $cheval->poids = $request->poids;
+    $cheval->pension = $request->pension;
+    $cheval->commentaire = $request->commentaire;
     $cheval->user_id = $request->user_id; // Mettre à jour l'association avec un utilisateur
 
     if ($request->hasFile('photo')) {

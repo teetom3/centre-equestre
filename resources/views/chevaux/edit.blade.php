@@ -42,6 +42,21 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group">
+    <label for="commentaire">Commentaire</label>
+    <textarea name="commentaire" id="commentaire" class="form-control" rows="5">{{ old('commentaire', $cheval->commentaire) }}</textarea>
+</div>
+
+                <div class="form-group">
+    <label for="pension">Pension</label>
+    <select name="pension" id="pension" class="form-control">
+        <option value="">-- Choisir une pension --</option>
+        <option value="pension 1" {{ old('pension', $cheval->pension ?? '') == 'pension 1' ? 'selected' : '' }}>Pension 1</option>
+        <option value="pension 2" {{ old('pension', $cheval->pension ?? '') == 'pension 2' ? 'selected' : '' }}>Pension 2</option>
+        <option value="pension 3" {{ old('pension', $cheval->pension ?? '') == 'pension 3' ? 'selected' : '' }}>Pension 3</option>
+        <option value="pension 4" {{ old('pension', $cheval->pension ?? '') == 'pension 4' ? 'selected' : '' }}>Pension 4</option>
+    </select>
+</div>
 
                 <div class="form-group mb-3">
                     <label for="photo">Photo du cheval (optionnel)</label>
